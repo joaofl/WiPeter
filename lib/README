@@ -2,42 +2,34 @@
 This directory is intended for project specific (private) libraries.
 PlatformIO will compile them to static libraries and link into executable file.
 
-The source code of each library should be placed in a an own separate directory
-("lib/your_library_name/[here are source files]").
-
-For example, see a structure of the following two libraries `Foo` and `Bar`:
-
-|--lib
-|  |
-|  |--Bar
-|  |  |--docs
-|  |  |--examples
-|  |  |--src
-|  |     |- Bar.c
-|  |     |- Bar.h
-|  |  |- library.json (optional, custom build options, etc) https://docs.platformio.org/page/librarymanager/config.html
-|  |
-|  |--Foo
-|  |  |- Foo.c
-|  |  |- Foo.h
-|  |
-|  |- README --> THIS FILE
-|
-|- platformio.ini
-|--src
-   |- main.c
-
-and a contents of `src/main.c`:
-```
-#include <Foo.h>
-#include <Bar.h>
-
-int main (void)
-{
-  ...
-}
-
-```
+Dependency Graph
+|-- <esphomelib> 1.10.0
+|   |-- <AsyncMqttClient> 0.8.2
+|   |   |-- <ESPAsyncTCP> 1.2.0
+|   |   |   |-- <ESP8266WiFi> 1.0
+|   |-- <ArduinoJson-esphomelib> 5.13.3
+|   |-- <ESP Async WebServer> 1.1.1
+|   |   |-- <ESPAsyncTCP> 1.2.0
+|   |   |   |-- <ESP8266WiFi> 1.0
+|   |   |-- <Hash> 1.0
+|   |   |-- <ESP8266WiFi> 1.0
+|   |   |-- <ArduinoJson-esphomelib> 5.13.3
+|   |-- <FastLED> 3.2.0
+|   |   |-- <EspSoftwareSerial> 3.4.1
+|   |-- <NeoPixelBus> 2.4.1
+|   |   |-- <SPI> 1.0
+|   |-- <ESP8266WiFi> 1.0
+|   |-- <Wire> 1.0
+|   |-- <ArduinoOTA> 1.0
+|   |   |-- <ESP8266mDNS>
+|   |   |   |-- <ESP8266WiFi> 1.0
+|   |   |-- <ESP8266WiFi> 1.0
+|   |-- <ESP8266mDNS>
+|   |   |-- <ESP8266WiFi> 1.0
+|   |-- <ESPAsyncTCP> 1.2.0
+|   |   |-- <ESP8266WiFi> 1.0
+|-- <PZEM004T> 1.1.2
+|   |-- <EspSoftwareSerial> 3.4.1
 
 PlatformIO Library Dependency Finder will find automatically dependent
 libraries scanning project source files.

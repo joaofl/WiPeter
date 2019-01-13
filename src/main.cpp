@@ -84,7 +84,6 @@ class PZEM : public PollingComponent {
 
     void update() override {
       if (!pzemrdy) return;
-      //v += 0.0341; a+=0.0265; p += 0.0234; e += 0.0123;
 
       led(1);
 
@@ -119,7 +118,7 @@ void setup() {
   pinMode(LED_BUILTIN, OUTPUT); 
   led(1);
 
-  App.set_name("WiPeter");
+  App.set_name("powermeter");
   //App.init_log(9600); //Init the serial port at same rate as the one used by the PZEM
 
   App.init_wifi(WIFI_SSID, WIFI_PASS);
@@ -128,9 +127,10 @@ void setup() {
   // ota->set_auth_plaintext_password("VERY_SECURE");
   // ota->start_safe_mode();
 
-  App.init_mqtt(HA_IP, HA_USERNAME, HA_PASS);
+  auto *mqtt = App.init_mqtt(HA_IP, HA_USERNAME, HA_PASS);
+  mqtt->set_topic_prefix("home/powermeter");
 
-  auto *pzem_module = new PZEM(800);
+  auto *pzem_module = new PZEM(1000);
   App.register_component(pzem_module);
   App.register_sensor(pzem_module->sensor_A);
   App.register_sensor(pzem_module->sensor_V);
