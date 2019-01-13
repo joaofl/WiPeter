@@ -4,7 +4,7 @@ This project was created using Platform.OI in order to monitor the power consump
 
 Its based on the ESP-8266 chip, more specifically on the 12-E dev module.
 
-![Alt text](docs/pinout.jpg?raw=true "ESP-12E pinout")
+![Alt text](https://github.com/joaofl/WiPeter/blob/master/docs/pinout.jpeg?raw=true "ESP-12E pinout")
 
 I use mainly two libs, one for the PZEM-004 powe meter, and another one for the publish subscriber MQTT connections with the Home Assitant sever. Find the links below:
 
