@@ -16,21 +16,17 @@
   #define HA_IP       "your_ha_ip"
 #endif
 
-
-
+////////////////////////////////////////////
 using namespace esphomelib;
-
 
 HardwareSerial hwserial(UART0);     // Use hwserial UART0 at pins GPIO1 (TX) and GPIO3 (RX)
 PZEM004T pzem(&hwserial);           // Attach PZEM to hwserial
 int ip = 0;
 bool pzemrdy = false;
 
-
 void led(bool state){
   digitalWrite(LED_BUILTIN, !state);
 }
-
 
 class PZEMAmpMeter : public sensor::Sensor {
  public:
@@ -60,7 +56,6 @@ class PZEMEnergyMeter : public sensor::Sensor {
   int8_t accuracy_decimals() override { return 0; }
 };
 
-// SIMPLE EXAMPLE: just pressure
 class PZEM : public PollingComponent {
   public:
 
