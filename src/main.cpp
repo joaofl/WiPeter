@@ -73,7 +73,7 @@ class PZEM : public PollingComponent {
           this->sensor_E = new PZEMEnergyMeter("Energy Meter");
         }
 
-    float a, v, p, e;
+    float a, a_prev, v, v_prev, p, p_prev, e, e_prev; //amps, amps_previous...
     uint8_t machine = 0;
 
     void setup() override {
@@ -87,24 +87,39 @@ class PZEM : public PollingComponent {
 
       led(1);
 
+      //Do some checks to avoid publishing the same values twice
+      //or to publish reading errors (-1 values)
+
       if (machine == 0){
         v = pzem.voltage(ip);
-        sensor_V->publish_state(v);
+        if (v >= 0 && v != v_prev){
+          sensor_V->publish_state(v);
+          v_prev = v;
+        }
       }
 
       if (machine == 1){
         a = pzem.current(ip);
-        sensor_A->publish_state(a); 
+        if (a >= 0 && a != a_prev){
+          sensor_A->publish_state(a);
+          a_prev = a; 
+        }
       }
 
       if (machine == 2){
         p = pzem.power(ip);
-        sensor_P->publish_state(p); 
+        if (p >= 0 && p != p_prev){
+          sensor_P->publish_state(p);
+          p_prev = p; 
+        }
       }
 
       if (machine == 3){
         e = pzem.energy(ip);
-        sensor_E->publish_state(e); 
+        if (e >= 0 && e != e_prev){
+          sensor_E->publish_state(e); 
+          e_prev = e;
+        }
       }
   
       machine ++;
@@ -130,7 +145,7 @@ void setup() {
   auto *mqtt = App.init_mqtt(HA_IP, HA_USERNAME, HA_PASS);
   mqtt->set_topic_prefix("home/powermeter");
 
-  auto *pzem_module = new PZEM(1000);
+  auto *pzem_module = new PZEM(5000);
   App.register_component(pzem_module);
   App.register_sensor(pzem_module->sensor_A);
   App.register_sensor(pzem_module->sensor_V);
@@ -142,7 +157,7 @@ void setup() {
   while (!pzemrdy) {
     pzemrdy = pzem.setAddress(ip);
     pzem.setReadTimeout(500); //ms
-    delay(500);
+    delay(2000);
     digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
   }
 
